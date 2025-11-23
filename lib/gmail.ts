@@ -113,7 +113,7 @@ export async function sendConfirmationEmail({
                   
                   <p style="color: #4b5563; font-size: 16px; margin-top: 24px;">
                     Trân trọng,<br>
-                    <strong style="color: #1f2937;">Ban Tổ Chức</strong>
+                    <strong style="color: #1f2937;">Nguyễn Minh Nhật</strong>
                   </p>
                 </td>
               </tr>
