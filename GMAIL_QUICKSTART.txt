@@ -1,0 +1,90 @@
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                                                                               ║
+║              📧 ĐÃ CHUYỂN SANG GMAIL SMTP THÀNH CÔNG!                        ║
+║                                                                               ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+
+✅ ĐÃ HOÀN THÀNH:
+  ✓ Cài đặt nodemailer
+  ✓ Tạo lib/gmail.ts 
+  ✓ Update app/api/rsvp/route.ts
+  ✓ Xóa resend package cũ
+  ✓ Xóa lib/resend.ts
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎯 BẠN CẦN LÀM (3 BƯỚC - 5 PHÚT):
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ BƯỚC 1: BẬT 2-STEP VERIFICATION (3 phút)                                   │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+1. Vào: https://myaccount.google.com/security
+2. Tìm "2-Step Verification" 
+3. Click "Get Started"
+4. Làm theo hướng dẫn
+5. ✅ Hoàn tất!
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ BƯỚC 2: TẠO APP PASSWORD (1 phút)                                          │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+1. Vào: https://myaccount.google.com/apppasswords
+2. Select app: "Mail"
+3. Select device: "Other" → Nhập: "Graduation Invitation"
+4. Click "Generate"
+5. COPY password (dạng: xxxx xxxx xxxx xxxx)
+6. ⚠️ LƯU LẠI - Chỉ hiện 1 lần!
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ BƯỚC 3: CẬP NHẬT .env.local (1 phút)                                       │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Tạo/Mở file .env.local và thêm:
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+# MongoDB
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/invitation_db
+
+# Gmail SMTP
+GMAIL_USER=21521226@gm.uit.edu.vn
+GMAIL_APP_PASSWORD=abcd efgh ijkl mnop
+
+# Thông tin sự kiện  
+NEXT_PUBLIC_EVENT_NAME=Lễ Tốt Nghiệp
+NEXT_PUBLIC_EVENT_DATE=2024-12-31
+NEXT_PUBLIC_EVENT_TIME=18:00
+NEXT_PUBLIC_EVENT_LOCATION=Trung tâm Hội nghị
+NEXT_PUBLIC_EVENT_ADDRESS=Hà Nội
+
+# Admin password
+ADMIN_PASSWORD=admin123
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚠️ THAY ĐỔI:
+  • GMAIL_USER: Email Gmail của bạn
+  • GMAIL_APP_PASSWORD: App Password vừa tạo ở Bước 2
+  • MONGODB_URI: Connection string MongoDB Atlas
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🧪 TEST:
+
+$ npm run dev
+
+Mở: http://localhost:3000
+Điền form RSVP → Check email nhận được!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📖 CHI TIẾT ĐẦY ĐỦ:
+   Xem file: GMAIL_SETUP.md
+
+💡 EMAIL SẼ GỬI TỪ: 21521226@gm.uit.edu.vn (Gmail của bạn!)
+
+🎉 HOÀN TẤT - Chúc mừng bạn!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+

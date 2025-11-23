@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+:root {
+  --font-inter: 'Inter', sans-serif;
+  --font-playfair: 'Playfair Display', serif;
+}
+
+@layer base {
+  body {
+    @apply bg-white min-h-screen;
+  }
+}
+
+@layer components {
+  .card-elegant {
+    @apply bg-white rounded-2xl shadow-xl border-2 border-gray-200;
+  }
+  
+  .btn-primary {
+    @apply bg-gradient-to-r from-yellow-500 to-blue-600 text-white font-semibold py-3 px-8 rounded-full 
+           hover:from-yellow-600 hover:to-blue-700 transform hover:scale-105 transition-all duration-300 
+           shadow-lg hover:shadow-xl;
+  }
+  
+  .btn-secondary {
+    @apply bg-white text-gray-900 font-semibold py-3 px-8 rounded-full border-2 border-gray-300
+           hover:border-yellow-500 hover:text-yellow-600 transform hover:scale-105 transition-all duration-300;
+  }
+  
+  .input-elegant {
+    @apply w-full px-4 py-3 rounded-lg border-2 border-gray-300 focus:border-blue-500 focus:ring-2 
+           focus:ring-blue-200 outline-none transition-all duration-300 bg-white;
+  }
+  
+  .section-title {
+    @apply text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-6;
+  }
+}
+
+@layer utilities {
+  .text-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .animate-float-delay-2 {
+    animation: float 6s ease-in-out infinite;
+    animation-delay: 2s;
+  }
+  
+  .animate-float-delay-4 {
+    animation: float 6s ease-in-out infinite;
+    animation-delay: 4s;
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.8s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
