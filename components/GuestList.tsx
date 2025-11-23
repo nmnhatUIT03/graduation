@@ -41,7 +41,7 @@ export default function GuestList({ guests }: GuestListProps) {
                   <p className="text-sm text-gray-600">{guest.email}</p>
                   {guest.message && (
                     <p className="text-sm text-gray-600 mt-2 italic">
-                      "{guest.message}"
+                      &quot;{guest.message}&quot;
                     </p>
                   )}
                 </div>
