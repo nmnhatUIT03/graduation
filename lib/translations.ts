@@ -65,6 +65,23 @@ export interface Translations {
   pauseMusic: string;
   playMusic: string;
   clickToPlay: string;
+  
+  // Email Content
+  emailGreeting: string;
+  emailThankYou: string;
+  emailConfirmedAttending: string;
+  emailConfirmedNotAttending: string;
+  emailSorryMessage: string;
+  emailEventInfo: string;
+  emailDateLabel: string;
+  emailTimeLabel: string;
+  emailLocationLabel: string;
+  emailAddressLabel: string;
+  emailNote: string;
+  emailRegards: string;
+  emailAddToCalendar: string;
+  emailSubjectAttending: string;
+  emailSubjectNotAttending: string;
 }
 
 export const translations: Record<Language, Translations> = {
@@ -133,6 +150,23 @@ export const translations: Record<Language, Translations> = {
     pauseMusic: "⏸ Tạm dừng",
     playMusic: "▶️ Phát nhạc",
     clickToPlay: "🎵 Click anywhere để bật nhạc nền",
+    
+    // Email Content
+    emailGreeting: "Xin chào",
+    emailThankYou: "Cảm ơn bạn đã phản hồi lời mời của chúng tôi.",
+    emailConfirmedAttending: "✓ Bạn đã xác nhận tham dự!",
+    emailConfirmedNotAttending: "✗ Bạn đã xác nhận không thể tham dự",
+    emailSorryMessage: "Chúng tôi rất tiếc vì bạn không thể đến. Hy vọng sẽ gặp bạn vào dịp khác!",
+    emailEventInfo: "📅 Thông Tin Sự Kiện",
+    emailDateLabel: "🗓 Ngày:",
+    emailTimeLabel: "🕐 Thời gian:",
+    emailLocationLabel: "📍 Địa điểm:",
+    emailAddressLabel: "🗺 Địa chỉ:",
+    emailNote: "💡 Lưu ý: Vui lòng đến đúng giờ để không bỏ lỡ những khoảnh khắc đáng nhớ!",
+    emailRegards: "Trân trọng",
+    emailAddToCalendar: "📅 Thêm vào Google Calendar",
+    emailSubjectAttending: "Xác nhận tham dự - ",
+    emailSubjectNotAttending: "Phản hồi lời mời - ",
   },
   
   en: {
@@ -200,6 +234,23 @@ export const translations: Record<Language, Translations> = {
     pauseMusic: "⏸ Pause",
     playMusic: "▶️ Play Music",
     clickToPlay: "🎵 Click anywhere to play background music",
+    
+    // Email Content
+    emailGreeting: "Hello",
+    emailThankYou: "Thank you for responding to our invitation.",
+    emailConfirmedAttending: "✓ You have confirmed your attendance!",
+    emailConfirmedNotAttending: "✗ You have confirmed that you cannot attend",
+    emailSorryMessage: "We're sorry you can't make it. Hope to see you next time!",
+    emailEventInfo: "📅 Event Information",
+    emailDateLabel: "🗓 Date:",
+    emailTimeLabel: "🕐 Time:",
+    emailLocationLabel: "📍 Venue:",
+    emailAddressLabel: "🗺 Address:",
+    emailNote: "💡 Note: Please arrive on time so you don't miss any special moments!",
+    emailRegards: "Best regards",
+    emailAddToCalendar: "📅 Add to Google Calendar",
+    emailSubjectAttending: "RSVP Confirmation - ",
+    emailSubjectNotAttending: "RSVP Response - ",
   },
   
   ja: {
@@ -267,6 +318,23 @@ export const translations: Record<Language, Translations> = {
     pauseMusic: "⏸ 一時停止",
     playMusic: "▶️ 音楽を再生",
     clickToPlay: "🎵 クリックしてバックグラウンドミュージックを再生",
+    
+    // Email Content
+    emailGreeting: "こんにちは",
+    emailThankYou: "ご招待への返信ありがとうございます。",
+    emailConfirmedAttending: "✓ ご出席のご確認をいただきました！",
+    emailConfirmedNotAttending: "✗ ご欠席のご連絡をいただきました",
+    emailSorryMessage: "ご出席いただけず残念です。また次の機会にお会いできることを楽しみにしています！",
+    emailEventInfo: "📅 イベント情報",
+    emailDateLabel: "🗓 日付：",
+    emailTimeLabel: "🕐 時間：",
+    emailLocationLabel: "📍 会場：",
+    emailAddressLabel: "🗺 住所：",
+    emailNote: "💡 注意：特別な瞬間を逃さないよう、時間通りにお越しください！",
+    emailRegards: "敬具",
+    emailAddToCalendar: "📅 Googleカレンダーに追加",
+    emailSubjectAttending: "出席確認 - ",
+    emailSubjectNotAttending: "招待状への返信 - ",
   },
 };
 

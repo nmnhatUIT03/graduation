@@ -19,7 +19,7 @@ interface ValidationErrors {
 }
 
 export default function RSVPForm() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [formData, setFormData] = useState<RSVPFormData>({
     name: '',
     email: '',
@@ -137,7 +137,10 @@ export default function RSVPForm() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          language: language, // Pass current language
+        }),
       });
 
       const data = await response.json();

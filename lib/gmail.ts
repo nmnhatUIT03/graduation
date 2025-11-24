@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+import { translations, type Language } from './translations';
 
 if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
   console.warn('⚠️ GMAIL_USER và GMAIL_APP_PASSWORD chưa được cấu hình trong .env.local');
@@ -16,16 +17,16 @@ const transporter = nodemailer.createTransport({
 
 interface SendEmailParams {
   to: string;
-  subject: string;
   name: string;
   attending: boolean;
+  language?: Language;
 }
 
 export async function sendConfirmationEmail({
   to,
-  subject,
   name,
   attending,
+  language = 'vi',
 }: SendEmailParams) {
   // Kiểm tra credentials
   if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
@@ -36,19 +37,47 @@ export async function sendConfirmationEmail({
     };
   }
 
-  const eventName = process.env.NEXT_PUBLIC_EVENT_NAME || 'Sự Kiện';
+  // Get translations for the selected language
+  const t = translations[language];
+  
+  const eventName = t.eventName;
   const eventDate = process.env.NEXT_PUBLIC_EVENT_DATE || 'TBA';
   const eventTime = process.env.NEXT_PUBLIC_EVENT_TIME || 'TBA';
   const eventLocation = process.env.NEXT_PUBLIC_EVENT_LOCATION || 'TBA';
   const eventAddress = process.env.NEXT_PUBLIC_EVENT_ADDRESS || 'TBA';
+  
+  // Create Google Calendar URL
+  const getGoogleCalendarUrl = () => {
+    const startDateTime = new Date(`${eventDate}T${eventTime}`);
+    const endDateTime = new Date(startDateTime.getTime() + 3 * 60 * 60 * 1000); // +3 hours
+    
+    const formatDate = (date: Date) => {
+      return date.toISOString().replace(/-|:|\.\d+/g, '');
+    };
+
+    const params = new URLSearchParams({
+      action: 'TEMPLATE',
+      text: eventName,
+      dates: `${formatDate(startDateTime)}/${formatDate(endDateTime)}`,
+      details: `${t.welcomeMessage} ${eventName}`,
+      location: eventAddress || eventLocation,
+    });
+
+    return `https://calendar.google.com/calendar/render?${params.toString()}`;
+  };
+  
+  const calendarUrl = getGoogleCalendarUrl();
+  const subject = attending 
+    ? `${t.emailSubjectAttending}${eventName}`
+    : `${t.emailSubjectNotAttending}${eventName}`;
 
   const attendingMessage = attending
     ? `
-      <p style="color: #059669; font-weight: 600; font-size: 18px;">✓ Bạn đã xác nhận tham dự!</p>
+      <p style="color: #059669; font-weight: 600; font-size: 18px;">${t.emailConfirmedAttending}</p>
     `
     : `
-      <p style="color: #DC2626; font-weight: 600; font-size: 18px;">✗ Bạn đã xác nhận không thể tham dự</p>
-      <p style="color: #6B7280;">Chúng tôi rất tiếc vì bạn không thể đến. Hy vọng sẽ gặp bạn vào dịp khác!</p>
+      <p style="color: #DC2626; font-weight: 600; font-size: 18px;">${t.emailConfirmedNotAttending}</p>
+      <p style="color: #6B7280;">${t.emailSorryMessage}</p>
     `;
 
   const html = `
@@ -75,44 +104,51 @@ export async function sendConfirmationEmail({
               <!-- Content -->
               <tr>
                 <td style="background-color: white; padding: 40px;">
-                  <h2 style="color: #1f2937; margin-top: 0; font-size: 24px;">Xin chào ${name}!</h2>
+                  <h2 style="color: #1f2937; margin-top: 0; font-size: 24px;">${t.emailGreeting} ${name}!</h2>
                   
                   <p style="color: #4b5563; font-size: 16px; line-height: 1.6;">
-                    Cảm ơn bạn đã phản hồi lời mời của chúng tôi.
+                    ${t.emailThankYou}
                   </p>
                   
                   ${attendingMessage}
                   
                   ${attending ? `
                   <div style="background: linear-gradient(135deg, #fdf2f8 0%, #fae8ff 100%); padding: 24px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #ec4899;">
-                    <h3 style="color: #831843; margin-top: 0; font-size: 18px;">📅 Thông Tin Sự Kiện</h3>
+                    <h3 style="color: #831843; margin-top: 0; font-size: 18px;">${t.emailEventInfo}</h3>
                     <table style="width: 100%; color: #374151;">
                       <tr>
-                        <td style="padding: 8px 0;"><strong>🗓 Ngày:</strong></td>
+                        <td style="padding: 8px 0;"><strong>${t.emailDateLabel}</strong></td>
                         <td style="padding: 8px 0;">${eventDate}</td>
                       </tr>
                       <tr>
-                        <td style="padding: 8px 0;"><strong>🕐 Thời gian:</strong></td>
+                        <td style="padding: 8px 0;"><strong>${t.emailTimeLabel}</strong></td>
                         <td style="padding: 8px 0;">${eventTime}</td>
                       </tr>
                       <tr>
-                        <td style="padding: 8px 0;"><strong>📍 Địa điểm:</strong></td>
+                        <td style="padding: 8px 0;"><strong>${t.emailLocationLabel}</strong></td>
                         <td style="padding: 8px 0;">${eventLocation}</td>
                       </tr>
                       <tr>
-                        <td style="padding: 8px 0;"><strong>🗺 Địa chỉ:</strong></td>
+                        <td style="padding: 8px 0;"><strong>${t.emailAddressLabel}</strong></td>
                         <td style="padding: 8px 0;">${eventAddress}</td>
                       </tr>
                     </table>
                   </div>
                   
+                  <!-- Google Calendar Button -->
+                  <div style="text-align: center; margin: 24px 0;">
+                    <a href="${calendarUrl}" target="_blank" style="display: inline-block; background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%); color: white; padding: 14px 32px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 16px; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);">
+                      ${t.emailAddToCalendar}
+                    </a>
+                  </div>
+                  
                   <p style="color: #4b5563; font-size: 14px; font-style: italic;">
-                    💡 Lưu ý: Vui lòng đến đúng giờ để không bỏ lỡ những khoảnh khắc đáng nhớ!
+                    ${t.emailNote}
                   </p>
                   ` : ''}
                   
                   <p style="color: #4b5563; font-size: 16px; margin-top: 24px;">
-                    Trân trọng,<br>
+                    ${t.emailRegards},<br>
                     <strong style="color: #1f2937;">Nguyễn Minh Nhật</strong>
                   </p>
                 </td>

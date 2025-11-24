@@ -5,10 +5,11 @@ import { sendConfirmationEmail } from '@/lib/gmail';
 
 export async function POST(request: NextRequest) {
   try {
-    const body: GuestInput = await request.json();
+    const body = await request.json();
+    const { language, ...guestData }: { language?: string } & GuestInput = body;
 
     // Validate dữ liệu
-    const validation = validateGuest(body);
+    const validation = validateGuest(guestData);
     if (!validation.valid) {
       return NextResponse.json(
         {
@@ -23,7 +24,7 @@ export async function POST(request: NextRequest) {
     const guestsCollection = await getCollection('guests');
 
     // Kiểm tra email đã tồn tại chưa
-    const existingGuest = await guestsCollection.findOne({ email: body.email });
+    const existingGuest = await guestsCollection.findOne({ email: guestData.email });
     
     if (existingGuest) {
       return NextResponse.json(
@@ -37,7 +38,7 @@ export async function POST(request: NextRequest) {
 
     // Tạo guest mới
     const newGuest = {
-      ...body,
+      ...guestData,
       createdAt: new Date(),
     };
 
@@ -46,10 +47,10 @@ export async function POST(request: NextRequest) {
 
     // Gửi email xác nhận (không chờ để response nhanh hơn)
     sendConfirmationEmail({
-      to: body.email,
-      subject: `Xác nhận tham dự - ${process.env.NEXT_PUBLIC_EVENT_NAME}`,
-      name: body.name,
-      attending: body.attending,
+      to: guestData.email,
+      name: guestData.name,
+      attending: guestData.attending,
+      language: (language as 'vi' | 'en' | 'ja') || 'vi',
     }).catch((error) => {
       console.error('Lỗi gửi email:', error);
       // Không throw error để không làm crash request
@@ -58,7 +59,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         success: true,
-        message: body.attending
+        message: guestData.attending
           ? 'Cảm ơn bạn đã xác nhận tham dự! Email xác nhận đã được gửi.'
           : 'Cảm ơn bạn đã phản hồi. Rất tiếc vì bạn không thể tham dự.',
         guestId: result.insertedId,
