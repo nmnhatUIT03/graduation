@@ -1,6 +1,6 @@
 # 🎓 Graduation Invitation - Single Page Invitation
 
-Trang web lời mời tốt nghiệp được xây dựng bằng Next.js, MongoDB, Gmail SMTP và Vercel.
+Trang web lời mời tốt nghiệp được xây dựng bằng Next.js, MongoDB, Gmail SMTP và Render.
 
 ## ✨ Tính năng
 
@@ -22,7 +22,7 @@ Trang web lời mời tốt nghiệp được xây dựng bằng Next.js, MongoD
 - **Database:** MongoDB Atlas
 - **Email:** Gmail SMTP (Nodemailer)
 - **Animation:** Framer Motion
-- **Deployment:** Vercel
+- **Deployment:** Render
 - **Language:** TypeScript
 
 ## 📦 Cài đặt
@@ -97,21 +97,24 @@ npm run build
 npm start
 ```
 
-## 📤 Deploy lên Vercel
+## 📤 Deploy lên Render
 
-### 🚀 Quick Start
+### 🚀 Tại sao chọn Render?
 
-Xem file `VERCEL_QUICKSTART.md` để deploy nhanh trong 5 bước!
+✅ **Hỗ trợ Gmail SMTP đầy đủ** - không bị giới hạn như Vercel
+✅ **Free tier 750 giờ/tháng** - đủ cho project nhỏ
+✅ **Auto deploy** - tự động deploy khi push code
+✅ **Dễ dàng quản lý Environment Variables**
 
 ### 📖 Hướng dẫn chi tiết
 
-Xem file `VERCEL_DEPLOYMENT.md` để biết hướng dẫn đầy đủ về:
-- Push code lên GitHub
-- Import vào Vercel
+Xem file `RENDER_DEPLOYMENT.md` để biết hướng dẫn đầy đủ về:
+- Cấu hình MongoDB Atlas
+- Tạo Web Service trên Render
 - Cấu hình Environment Variables
+- Gmail SMTP setup
 - Troubleshooting
 - Custom domain
-- Monitor & maintain
 
 ## 📂 Cấu trúc thư mục
 
