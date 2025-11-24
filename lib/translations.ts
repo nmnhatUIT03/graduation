@@ -32,6 +32,8 @@ export interface Translations {
   phone: string;
   phoneOptional: string;
   message: string;
+  messagePlaceholderAttending: string;
+  messagePlaceholderNotAttending: string;
   submit: string;
   submitting: string;
   
@@ -98,6 +100,8 @@ export const translations: Record<Language, Translations> = {
     phone: "Số điện thoại",
     phoneOptional: "Số điện thoại (nếu có)",
     message: "Lời nhắn gửi",
+    messagePlaceholderAttending: "Gửi lời chúc hoặc lời nhắn của bạn...",
+    messagePlaceholderNotAttending: "Để lại lời nhắn của bạn nếu muốn...",
     submit: "Gửi xác nhận",
     submitting: "Đang gửi...",
     
@@ -163,6 +167,8 @@ export const translations: Record<Language, Translations> = {
     phone: "Phone Number",
     phoneOptional: "Phone Number (optional)",
     message: "Message",
+    messagePlaceholderAttending: "Send your congratulations or message...",
+    messagePlaceholderNotAttending: "Leave your message if you'd like...",
     submit: "Submit",
     submitting: "Submitting...",
     
@@ -228,6 +234,8 @@ export const translations: Record<Language, Translations> = {
     phone: "電話番号",
     phoneOptional: "電話番号（任意）",
     message: "メッセージ",
+    messagePlaceholderAttending: "お祝いのメッセージをお送りください...",
+    messagePlaceholderNotAttending: "よろしければメッセージをお残しください...",
     submit: "送信",
     submitting: "送信中...",
     

@@ -419,8 +419,8 @@ export default function RSVPForm() {
         <textarea
           className="input-elegant min-h-[100px] resize-none"
           placeholder={formData.attending 
-            ? "Gửi lời chúc hoặc lời nhắn của bạn..." 
-            : "Để lại lời nhắn của bạn nếu muốn..."}
+            ? t.messagePlaceholderAttending
+            : t.messagePlaceholderNotAttending}
           value={formData.message}
           onChange={(e) => setFormData({ ...formData, message: e.target.value })}
         />
