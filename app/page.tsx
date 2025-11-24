@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import InvitationCard from '@/components/InvitationCard';
 import RSVPForm from '@/components/RSVPForm';
+import BackgroundMusic from '@/components/BackgroundMusic';
 import Link from 'next/link';
 
 export default function Home() {
@@ -10,6 +11,9 @@ export default function Home() {
 
   return (
     <main className="min-h-screen py-12 px-4 relative bg-white">
+      {/* Background Music */}
+      <BackgroundMusic />
+
       {/* Decorative Background Elements */}
       <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
         <div className="absolute top-10 left-10 w-72 h-72 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float" />
