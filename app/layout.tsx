@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter, Playfair_Display } from 'next/font/google';
 import './globals.css';
+import Providers from '@/components/Providers';
 
 const inter = Inter({
   subsets: ['latin', 'vietnamese'],
@@ -34,15 +35,17 @@ export default function RootLayout({
   return (
     <html lang="vi" className={`${inter.variable} ${playfair.variable}`}>
       <body className={inter.className}>
-        <div className="min-h-screen">
-          {children}
-        </div>
+        <Providers>
+          <div className="min-h-screen">
+            {children}
+          </div>
+        </Providers>
         
         {/* Background decoration */}
         <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
           <div className="absolute top-0 left-0 w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float" />
-          <div className="absolute top-0 right-0 w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float" style={{ animationDelay: '2s' }} />
-          <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float" style={{ animationDelay: '4s' }} />
+          <div className="absolute top-0 right-0 w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float animate-float-delay-2" />
+          <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float animate-float-delay-4" />
         </div>
       </body>
     </html>

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface RSVPFormData {
   name: string;
@@ -18,6 +19,7 @@ interface ValidationErrors {
 }
 
 export default function RSVPForm() {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState<RSVPFormData>({
     name: '',
     email: '',
@@ -35,24 +37,18 @@ export default function RSVPForm() {
   // Validation functions
   const validateName = (name: string): string | undefined => {
     if (!name.trim()) {
-      return 'Thiếu họ và tên kìaa';
-    }
-    if (name.trim().length < 2) {
-      return 'Tên gì có 2 chữ vậy fen';
-    }
-    if (name.trim().length > 100) {
-      return 'Tên dài dữ bây';
+      return t.nameRequired;
     }
     return undefined;
   };
 
   const validateEmail = (email: string): string | undefined => {
     if (!email.trim()) {
-      return 'Nhập mail ik tí có bất ngờ';
+      return t.emailRequired;
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      return 'Email không hợp lệ (VD: example@gmail.com)';
+      return t.emailInvalid;
     }
     return undefined;
   };
@@ -62,7 +58,7 @@ export default function RSVPForm() {
       // Chỉ validate nếu user đã nhập
       const phoneRegex = /^[0-9]{10,11}$/;
       if (!phoneRegex.test(phone.replace(/\s/g, ''))) {
-        return 'Số điện thoại phải có 10-11 chữ số';
+        return t.phoneInvalid;
       }
     }
     return undefined;
@@ -180,14 +176,14 @@ export default function RSVPForm() {
         >
           <div className="text-7xl mb-6">❤️</div>
           <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-            {formData.name ? `Cảm ơn ${formData.name} rất nhiều!` : 'Cảm ơn bạn rất nhiều!'}
+            {t.thankYouNotAttending}
           </h3>
           <p className="text-lg md:text-xl text-gray-800 leading-relaxed mb-4">
-            Mong bạn có thật nhiều sức khỏe và hạnh phúc
+            {t.wishYouWell}
           </p>
           {formData.message && (
             <div className="mt-6 p-4 bg-white/50 rounded-lg border-2 border-pink-200">
-              <p className="text-sm text-gray-600 mb-1">Lời nhắn của bạn:</p>
+              <p className="text-sm text-gray-600 mb-1">{t.yourMessage}</p>
               <p className="text-gray-800 italic">&quot;{formData.message}&quot;</p>
             </div>
           )}
@@ -204,10 +200,10 @@ export default function RSVPForm() {
       >
         <div className="text-6xl mb-4">🎉</div>
         <h3 className="text-2xl font-bold text-gray-900 mb-2">
-          Cảm ơn bạn!
+          {t.thankYou}
         </h3>
         <p className="text-gray-700">
-          Chúng tôi đã nhận được xác nhận tham dự của bạn. Email xác nhận đã được gửi!
+          {t.thankYouAttending}
         </p>
       </motion.div>
     );
@@ -223,13 +219,8 @@ export default function RSVPForm() {
     >
       <div className="text-center mb-6">
         <h3 className="text-3xl font-serif font-bold text-gray-900 mb-2">
-          Xác Nhận Tham Dự
+          {t.rsvpTitle}
         </h3>
-        <p className="text-gray-700">
-          {formData.attending 
-            ? 'Vui lòng điền thông tin của bạn bên dưới'
-            : 'Cảm ơn bạn đã phản hồi'}
-        </p>
       </div>
 
       {error && (
@@ -241,7 +232,7 @@ export default function RSVPForm() {
       {/* Có tham dự không - ĐẦU TIÊN */}
       <div className="bg-gradient-to-r from-yellow-50 to-blue-50 border-2 border-yellow-400 p-6 rounded-lg">
         <label className="block text-gray-900 font-semibold mb-3">
-          Bạn có thể tham dự không? <span className="text-red-500">*</span>
+          {t.attending} <span className="text-red-500">*</span>
         </label>
         <div className="flex gap-4">
           <label className="flex items-center cursor-pointer">
@@ -252,7 +243,7 @@ export default function RSVPForm() {
               onChange={() => setFormData({ ...formData, attending: true })}
               className="mr-2 w-5 h-5 text-yellow-500 focus:ring-yellow-500"
             />
-            <span className="text-lg text-gray-900">✓ Có, tôi sẽ tham dự</span>
+            <span className="text-lg text-gray-900">{t.attendingYes}</span>
           </label>
           <label className="flex items-center cursor-pointer">
             <input
@@ -264,7 +255,7 @@ export default function RSVPForm() {
               }
               className="mr-2 w-5 h-5 text-gray-500 focus:ring-gray-500"
             />
-            <span className="text-lg text-gray-900">✗ Không, tôi không thể đến</span>
+            <span className="text-lg text-gray-900">{t.attendingNo}</span>
           </label>
         </div>
       </div>
@@ -273,7 +264,7 @@ export default function RSVPForm() {
       {/* Họ và tên - LUÔN HIỆN */}
       <div>
         <label className="block text-gray-700 font-semibold mb-2">
-          Họ và tên {formData.attending && <span className="text-red-500">*</span>}
+          {formData.attending ? t.name : t.nameOptional} {formData.attending && <span className="text-red-500">*</span>}
         </label>
         <input
           type="text"
@@ -324,7 +315,7 @@ export default function RSVPForm() {
       {/* Email */}
       <div>
         <label className="block text-gray-700 font-semibold mb-2">
-          Email <span className="text-red-500">*</span>
+          {t.email} <span className="text-red-500">*</span>
         </label>
         <input
           type="email"
@@ -371,7 +362,7 @@ export default function RSVPForm() {
       {/* Số điện thoại */}
       <div>
         <label className="block text-gray-700 font-semibold mb-2">
-          Số điện thoại <span className="text-gray-400 text-sm">(Tùy chọn)</span>
+          {t.phoneOptional}
         </label>
         <input
           type="tel"
@@ -423,7 +414,7 @@ export default function RSVPForm() {
       {/* Lời nhắn - LUÔN HIỆN */}
       <div>
         <label className="block text-gray-700 font-semibold mb-2">
-          Lời nhắn gửi
+          {t.message}
         </label>
         <textarea
           className="input-elegant min-h-[100px] resize-none"
@@ -463,10 +454,10 @@ export default function RSVPForm() {
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
               />
             </svg>
-            Đang gửi...
+            {t.submitting}
           </span>
         ) : (
-          'Gửi xác nhận'
+          t.submit
         )}
       </button>
     </motion.form>

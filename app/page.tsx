@@ -4,13 +4,19 @@ import { motion } from 'framer-motion';
 import InvitationCard from '@/components/InvitationCard';
 import RSVPForm from '@/components/RSVPForm';
 import BackgroundMusic from '@/components/BackgroundMusic';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
+import { useLanguage } from '@/contexts/LanguageContext';
 import Link from 'next/link';
 
 export default function Home() {
+  const { t } = useLanguage();
   const eventAddress = process.env.NEXT_PUBLIC_EVENT_ADDRESS || 'TBA';
 
   return (
     <main className="min-h-screen py-12 px-4 relative bg-white">
+      {/* Language Switcher */}
+      <LanguageSwitcher />
+      
       {/* Background Music */}
       <BackgroundMusic />
 
@@ -35,7 +41,7 @@ export default function Home() {
           className="bg-white rounded-2xl shadow-xl border-2 border-yellow-400 p-6"
         >
           <h2 className="text-3xl font-serif font-bold text-gray-900 mb-4 text-center">
-            📍 Địa Điểm
+            {t.mapTitle}
           </h2>
           <p className="text-center text-gray-700 mb-6">{eventAddress}</p>
           
@@ -74,12 +80,12 @@ export default function Home() {
         >
           <div className="max-w-3xl">
             <h2 className="text-2xl md:text-3xl font-serif font-bold text-gray-900 mb-6">
-              Thông Tin Liên Hệ
+              {t.contactTitle}
             </h2>
             
             <div className="space-y-4">
               <div>
-                <p className="text-sm text-gray-600 mb-1">Số điện thoại</p>
+                <p className="text-sm text-gray-600 mb-1">{t.phoneLabel}</p>
                 <a
                   href="tel:0346029426"
                   className="text-lg md:text-xl font-semibold text-gray-900 hover:text-blue-600 transition-colors"
@@ -90,7 +96,7 @@ export default function Home() {
               
               <div className="pt-4 border-t border-gray-200">
                 <p className="text-sm text-gray-600">
-                  Hãy liên lạc với tớ nếu có khó khăn nào nhé!
+                  {t.contactMessage}
                 </p>
               </div>
             </div>
@@ -106,16 +112,16 @@ export default function Home() {
         className="text-center mt-16 pb-8"
       >
         <p className="text-gray-700 mb-2 font-medium">
-          Rất mong được gặp bạn ngày hôm ấy! 💖
+          {t.footerMessage}
         </p>
         <p className="text-sm text-gray-600">
-          © 2025 Graduation Invitation. All rights reserved.
+          {t.footerCopyright}
         </p>
         <Link 
           href="/admin" 
           className="inline-block mt-4 text-xs text-gray-500 hover:text-yellow-600 transition-colors"
         >
-          Admin Panel
+          {t.adminPanel}
         </Link>
       </motion.footer>
     </main>

@@ -1,8 +1,9 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import Image from 'next/image';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface TimeLeft {
   days: number;
@@ -12,7 +13,8 @@ interface TimeLeft {
 }
 
 export default function InvitationCard() {
-  const eventName = process.env.NEXT_PUBLIC_EVENT_NAME || "Nhat's graduation";
+  const { t } = useLanguage();
+  const eventName = t.eventName;
   const eventDate = process.env.NEXT_PUBLIC_EVENT_DATE || '2025-11-27';
   const eventTime = process.env.NEXT_PUBLIC_EVENT_TIME || '11:30';
   const eventLocation = process.env.NEXT_PUBLIC_EVENT_LOCATION || 'Sảnh A - Trường Đại học Công nghệ thông tin (ĐHQG-TPHCM)';
@@ -22,7 +24,7 @@ export default function InvitationCard() {
   const [mounted, setMounted] = useState(false);
 
   // Function to create Google Calendar URL
-  const getGoogleCalendarUrl = () => {
+  const googleCalendarUrl = useMemo(() => {
     const startDateTime = new Date(`${eventDate}T${eventTime}`);
     const endDateTime = new Date(startDateTime.getTime() + 3 * 60 * 60 * 1000); // +3 hours
     
@@ -35,12 +37,12 @@ export default function InvitationCard() {
       action: 'TEMPLATE',
       text: eventName,
       dates: `${formatDate(startDateTime)}/${formatDate(endDateTime)}`,
-      details: `Trân trọng kính mời bạn đến tham dự ${eventName}`,
+      details: `${t.welcomeMessage} ${eventName}`,
       location: eventAddress || eventLocation,
     });
 
     return `https://calendar.google.com/calendar/render?${params.toString()}`;
-  };
+  }, [eventName, eventDate, eventTime, eventLocation, eventAddress, t.welcomeMessage]);
 
   useEffect(() => {
     setMounted(true);
@@ -147,7 +149,7 @@ export default function InvitationCard() {
 
             {/* Welcome Message */}
             <p className="text-base md:text-lg text-gray-700 leading-relaxed">
-              &quot;Trân trọng mời bạn đến buổi lễ của tớ ❤️&quot;
+              &quot;{t.welcomeMessage} ❤️&quot;
             </p>
           </motion.div>
         </div>
@@ -163,7 +165,7 @@ export default function InvitationCard() {
             <div className="flex items-center gap-4 text-gray-900">
               <span className="text-4xl flex-shrink-0">📅</span>
               <div className="flex-1">
-                <p className="text-xs text-gray-600 mb-1">Ngày</p>
+                <p className="text-xs text-gray-600 mb-1">{t.date}</p>
                 <p className="text-lg font-bold leading-tight">
                   {new Date(eventDate).toLocaleDateString('vi-VN', {
                     weekday: 'long',
@@ -178,7 +180,7 @@ export default function InvitationCard() {
             <div className="flex items-center gap-4 text-gray-900">
               <span className="text-4xl flex-shrink-0">🕐</span>
               <div className="flex-1">
-                <p className="text-xs text-gray-600 mb-1">Thời gian</p>
+                <p className="text-xs text-gray-600 mb-1">{t.time}</p>
                 <p className="text-lg font-bold">{eventTime}</p>
               </div>
             </div>
@@ -186,7 +188,7 @@ export default function InvitationCard() {
             <div className="flex items-center gap-4 text-gray-900">
               <span className="text-4xl flex-shrink-0">📍</span>
               <div className="flex-1">
-                <p className="text-xs text-gray-600 mb-1">Địa điểm</p>
+                <p className="text-xs text-gray-600 mb-1">{t.location}</p>
                 <p className="text-lg font-bold leading-tight">{eventLocation}</p>
               </div>
             </div>
@@ -202,14 +204,14 @@ export default function InvitationCard() {
             className="mb-8"
           >
             <h3 className="text-2xl font-serif font-bold text-gray-900 mb-6 text-center">
-              Đếm ngược đến sự kiện
+              {t.countdownTitle}
             </h3>
             <div className="flex justify-center gap-3 md:gap-6">
               {[
-                { value: timeLeft.days, label: 'Ngày' },
-                { value: timeLeft.hours, label: 'Giờ' },
-                { value: timeLeft.minutes, label: 'Phút' },
-                { value: timeLeft.seconds, label: 'Giây' },
+                { value: timeLeft.days, label: t.days },
+                { value: timeLeft.hours, label: t.hours },
+                { value: timeLeft.minutes, label: t.minutes },
+                { value: timeLeft.seconds, label: t.seconds },
               ].map((item, index) => (
                 <motion.div
                   key={item.label}
@@ -238,13 +240,13 @@ export default function InvitationCard() {
           className="mb-8 text-center"
         >
           <a
-            href={getGoogleCalendarUrl()}
+            href={googleCalendarUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold py-4 px-8 rounded-full shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
           >
             <span className="text-2xl">📅</span>
-            <span className="text-lg">Thêm vào Google Calendar</span>
+            <span className="text-lg">{t.addToCalendar}</span>
           </a>
         </motion.div>
 
@@ -255,7 +257,7 @@ export default function InvitationCard() {
           transition={{ delay: 1.5, duration: 0.6 }}
           className="border-l-4 border-yellow-400 bg-yellow-50 pl-4 pr-4 py-3 italic text-gray-700 rounded-r-lg"
         >
-          &quot;Sự hiện diện của bạn là món quà tuyệt vời nhất của tui :3&quot;
+          &quot;{t.quote}&quot;
         </motion.div>
       </div>
     </motion.div>

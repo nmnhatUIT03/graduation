@@ -2,8 +2,10 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function BackgroundMusic() {
+  const { t } = useLanguage();
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -88,7 +90,7 @@ export default function BackgroundMusic() {
         
         {/* Tooltip */}
         <span className="absolute bottom-full mb-2 right-0 bg-gray-900 text-white text-xs px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-lg">
-          {isPlaying ? '⏸ Tạm dừng' : '▶️ Phát nhạc'}
+          {isPlaying ? t.pauseMusic : t.playMusic}
         </span>
 
         {/* Sound wave animation khi đang play */}
@@ -131,7 +133,7 @@ export default function BackgroundMusic() {
           transition={{ delay: 3, duration: 0.6 }}
           className="fixed bottom-24 right-6 z-40 bg-white border-2 border-yellow-400 px-4 py-2 rounded-lg shadow-lg text-sm text-gray-800 max-w-xs"
         >
-          <p className="font-medium">🎵 Click anywhere để bật nhạc nền</p>
+          <p className="font-medium">{t.clickToPlay}</p>
         </motion.div>
       )}
     </>

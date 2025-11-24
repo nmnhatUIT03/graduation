@@ -26,6 +26,17 @@ const config: Config = {
         sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
         serif: ['var(--font-playfair)', 'Georgia', 'serif'],
       },
+      animation: {
+        'float': 'float 6s ease-in-out infinite',
+        'float-delay-2': 'float 6s ease-in-out 2s infinite',
+        'float-delay-4': 'float 6s ease-in-out 4s infinite',
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-20px)' },
+        },
+      },
     },
   },
   plugins: [],
